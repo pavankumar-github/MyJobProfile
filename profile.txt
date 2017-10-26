@@ -4,6 +4,8 @@ I Have been working as a Testing Engineer in IBM pvt ltd
 
 I belongs to bengaluru 
 
-My payroll company is Converse Infotech Pvt ltd
+My Highest Qualification if Masters Degree from JNTU Hyderabad
 
-My Date of birth is on 20-sep-1987
+Having around 3 years of core experience in Software testing with Automation Testing Selenium WebDriver and Manual Testing
+
+Have good experience in creating scripts in Selenium WebDriver using Java
