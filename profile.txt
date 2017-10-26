@@ -6,4 +6,7 @@ I belongs to bengaluru
 
 My payroll company is Converse Infotech Pvt ltd
 
-My Date of birth is on 20-sep-1987
+My Highest Qualification if Masters Degree from JNTU Hyderabad
+
+Having around 3 years of core experience in Software testing with Automation Testing Selenium WebDriver and Manual Testing
+Have good experience in creating scripts in Selenium WebDriver using Java
