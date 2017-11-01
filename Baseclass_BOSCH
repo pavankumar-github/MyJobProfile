@@ -1,0 +1,175 @@
+package com.utilities;
+
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class BaseClass 
+{
+	
+	WebDriver driver;
+	public BaseClass(WebDriver driver)
+	{
+		this.driver=driver;
+	}
+	
+	public WebElement geWebElement(By locator)
+	{
+		WebDriverWait wait=new WebDriverWait(driver, 180);
+		WebElement element=wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+		return element;
+	}
+	
+	public List<WebElement> geWebElements(final By locator)
+	{
+		WebDriverWait wait=new WebDriverWait(driver, 180);
+		List<WebElement> element=wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+		return element;
+	}
+	public WebElement geWebElementClickable(final WebElement element)
+	{
+		WebDriverWait wait=new WebDriverWait(driver, 180);
+		return wait.until(ExpectedConditions.elementToBeClickable(element));
+	}
+	public WebElement geWebElementClickable(final By locator)
+	{
+		WebDriverWait wait=new WebDriverWait(driver, 180);
+		return wait.until(ExpectedConditions.elementToBeClickable(locator));
+	}
+	public final ExpectedCondition<Boolean> Expect_Doc_Ready_State=new ExpectedCondition<Boolean>()
+	{
+		public Boolean apply(WebDriver driver)
+			{
+				String script="if (typeof window != 'undefined' && window.document) "
+						+ "{return window.document.readyState;} else {return 'notready';}";
+						Boolean result;
+						try
+						{
+							result=((JavascriptExecutor)driver).executeScript(script).equals("complete");
+						}
+						catch (Exception ex)
+						{
+							result=Boolean.FALSE;
+						}
+				return result;
+			}
+	};
+	public boolean verifyPageLoad(int waitTimeInSec,String text)
+	{
+		Boolean result;
+		String script="if (typeof window != 'undefined' && window.document) "
+				+ "{return window.document.readyState;} else {return 'notready';}";
+				
+				try
+				{
+					result=((JavascriptExecutor)driver).executeScript(script).equals("complete");
+				}
+				catch (Exception ex)
+				{
+					result=Boolean.FALSE;
+					ex.printStackTrace();
+					return result;
+				}
+		WebDriverWait wait=new WebDriverWait(driver, waitTimeInSec);
+		wait.until(ExpectedConditions.titleContains(text));
+		result=Boolean.TRUE;
+		return result;
+	}
+	public Boolean isElementsLoadedWithGivenTime(int waittime)
+	{
+		return true;
+	}
+	public boolean verifyPageLoadByExactTitleMathch(int waitTimeInSec,String text)
+	{
+		Boolean result;
+		String script="if (typeof window != 'undefined' && window.document) "
+				+ "{return window.document.readyState;} else {return 'notready';}";
+				
+				try
+				{
+					result=((JavascriptExecutor)driver).executeScript(script).equals("complete");
+				}
+				catch (Exception ex)
+				{
+					result=Boolean.FALSE;
+					ex.printStackTrace();
+					return result;
+				}
+		WebDriverWait wait=new WebDriverWait(driver, waitTimeInSec);
+		wait.until(ExpectedConditions.titleContains(text));
+		result=Boolean.TRUE;
+		return result;
+	}
+	public void wait (int watiTimeInSec)
+	{
+		try
+		{
+			WebDriverWait wait=new WebDriverWait(driver, 180);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//f")));
+			
+		}
+		catch(Exception e)
+		{
+			
+		}
+	}
+	public boolean verifyElementTextMatch(int waitTimeInSec, final By locator,String text)
+	{
+		WebDriverWait wait=new WebDriverWait(driver, waitTimeInSec);
+		return wait.until(ExpectedConditions.textToBe(locator,text));
+		
+	}
+	public boolean waitforthePageLoad(int waitTimeInSec, By curlocator)
+	{
+		Boolean result;
+		String script="if (typeof window != 'undefined' && window.document) "
+				+ "{return window.document.readyState;} else {return 'notready';}";
+				
+				try
+				{
+					result=((JavascriptExecutor)driver).executeScript(script).equals("complete");
+				}
+				catch (Exception ex)
+				{
+					result=Boolean.FALSE;
+					return result;
+				}
+		WebDriverWait wait=new WebDriverWait(driver, waitTimeInSec);
+		WebElement ele=wait.until(ExpectedConditions.visibilityOfElementLocated(curlocator));
+		if(ele !=null)
+		{
+			result=true;
+		}
+		return result;
+	}
+	public void switchToFrame(int index, int waitTimeInSec)
+	{
+		WebDriverWait wait=new WebDriverWait(driver, waitTimeInSec);
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(index));
+	}
+	public void switchToFrame(String id, int waitTimeInSec)
+	{
+		WebDriverWait wait=new WebDriverWait(driver, waitTimeInSec);
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id(id)));
+	}
+	public boolean isElementVisible(final By locator)
+	{
+		Wait<WebDriver> wait=new FluentWait<WebDriver>(driver).withTimeout(200, TimeUnit.SECONDS).ignoring(NoSuchElementException.class).pollingEvery(2,TimeUnit.SECONDS);
+		WebElement element=wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+		if(element != null)
+		{
+			return true;
+		}
+		return false;
+	}
+}
