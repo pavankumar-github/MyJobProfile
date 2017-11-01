@@ -1,0 +1,48 @@
+package sel_webDriver;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class Demo_login
+{
+
+	public static void main(String[] args) throws Exception 
+	{
+		
+		System.setProperty("webdriver.gecko.driver","C:\\Users\\shravan\\Desktop\\selenium\\geckodriver.exe");
+		WebDriver driver=new FirefoxDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.facebook.com");
+		FileInputStream fs=new FileInputStream("E:\\Automation\\Login.xlsx");
+		XSSFWorkbook wb= new XSSFWorkbook(fs);
+		XSSFSheet sh=wb.getSheetAt(0);
+		int rows=sh.getLastRowNum();
+		int i=0;
+		while (i>rows)
+		{
+			XSSFCell use=sh.getRow(i).getCell(0);
+			XSSFCell pass=sh.getRow(i).getCell(1);
+			driver.findElement(By.id("email")).clear();
+			driver.findElement(By.id("email")).sendKeys(use);
+			driver.findElement(By.id("pass")).clear();
+			driver.findElement(By.id("pass")).sendKeys("ramaraju123");
+			//WebDriverWait wait=new WebDriverWait(driver, 30);
+			//wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("userNavigationLabel"))));
+			//driver.findElement(By.id("userNavigationLabel")).click();
+			//driver.findElement(By.xpath("//*[@id='js_4j']/div/div/ul/li[16]/a/span/span")).click();
+			i++;
+		}
+		
+	}	
+}
